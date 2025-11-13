@@ -1,0 +1,12 @@
+{
+    "agents": [
+        "claude_code",
+        "opencode"
+    ],
+    "editors": [
+        "vscode"
+    ],
+    "guidelines": [
+        "laravel/fortify"
+    ]
+}
