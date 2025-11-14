@@ -8,14 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        DB::table('users')->insert([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'),
-            'email_verified_at' => now(),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $existingUser = DB::table('users')->where('email', 'test@example.com')->first();
+
+        if (!$existingUser) {
+            DB::table('users')->insert([
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 
     public function down(): void

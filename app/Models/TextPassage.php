@@ -11,6 +11,7 @@ class TextPassage extends Model
     use HasFactory;
 
     protected $fillable = [
+        'title',
         'text',
         'language',
         'word_count',

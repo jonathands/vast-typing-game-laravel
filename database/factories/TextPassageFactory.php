@@ -31,7 +31,11 @@ class TextPassageFactory extends Factory
         $extractedWords = array_slice($words, 0, min($targetWordCount, count($words)));
         $text = implode(' ', $extractedWords);
 
+        $passageCount = \App\Models\TextPassage::count() + 1;
+        $title = $sourceText->title . ' - Passage ' . $passageCount;
+
         return [
+            'title' => $title,
             'text' => $text,
             'language' => 'en',
             'word_count' => str_word_count($text),

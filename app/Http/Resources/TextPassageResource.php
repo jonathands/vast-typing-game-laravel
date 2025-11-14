@@ -16,6 +16,7 @@ class TextPassageResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'title' => $this->title,
             'text' => $this->text,
             'language' => $this->language,
             'word_count' => $this->word_count,
