@@ -4,6 +4,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\GameDataController;
 use App\Http\Controllers\Api\GamePlayController;
+use App\Http\Controllers\Api\RankingController;
 use App\Http\Controllers\Api\UserStatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,9 @@ Route::middleware(['auth:sanctum'])->prefix('game-play')->group(function () {
 });
 
 Route::middleware(['auth:sanctum'])->get('/user/history', [UserStatsController::class, 'history']);
+
+Route::prefix('rankings')->group(function () {
+    Route::get('/general', [RankingController::class, 'general']);
+    Route::get('/accuracy', [RankingController::class, 'accuracy']);
+    Route::get('/speed', [RankingController::class, 'speed']);
+});
