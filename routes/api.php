@@ -1,23 +1,32 @@
 
 <?php
 
-use App\Http\Controllers\GameController;
-use App\Http\Controllers\LeaderboardController;
-use App\Http\Controllers\TextPassageController;
-use App\Http\Controllers\UserStatsController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\GameDataController;
+use App\Http\Controllers\Api\GamePlayController;
+use App\Http\Controllers\Api\UserStatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware(['auth:sanctum'])->post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/passages', [TextPassageController::class, 'index']);
-Route::get('/passages/{textPassage}', [TextPassageController::class, 'show']);
-
-Route::get('/leaderboard', [LeaderboardController::class, 'index']);
-
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/game/submit', [GameController::class, 'store']);
-    Route::get('/user/history', [UserStatsController::class, 'history']);
+Route::prefix('game-data')->group(function () {
+    Route::get('/', [GameDataController::class, 'index']);
+    Route::get('/random', [GameDataController::class, 'random']);
+    Route::get('/{id}', [GameDataController::class, 'show']);
 });
+
+Route::middleware(['auth:sanctum'])->prefix('game-play')->group(function () {
+    Route::post('/start', [GamePlayController::class, 'start']);
+    Route::post('/submit-word', [GamePlayController::class, 'submitWord']);
+    Route::post('/finish', [GamePlayController::class, 'finish']);
+    Route::post('/calculate-stats', [GamePlayController::class, 'calculateStats']);
+});
+
+Route::middleware(['auth:sanctum'])->get('/user/history', [UserStatsController::class, 'history']);

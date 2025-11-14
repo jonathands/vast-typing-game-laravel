@@ -13,6 +13,7 @@ class Result extends Model
     protected $fillable = [
         'user_id',
         'text_passage_id',
+        'user_input',
         'wpm',
         'accuracy',
         'time_taken',
