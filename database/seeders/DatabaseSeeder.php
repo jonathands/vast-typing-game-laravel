@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SourceTextSeeder::class,
             TextPassageSeeder::class,
+            RankingSeeder::class,
         ]);
     }
 }

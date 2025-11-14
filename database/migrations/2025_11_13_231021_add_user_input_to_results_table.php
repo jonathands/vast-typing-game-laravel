@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('results', function (Blueprint $table) {
-            $table->text('user_input')->after('text_passage_id');
+            $table->text('user_input')->nullable(false)->after('text_passage_id');
         });
     }
 
