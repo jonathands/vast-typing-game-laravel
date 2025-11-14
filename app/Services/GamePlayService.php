@@ -94,7 +94,6 @@ class GamePlayService
     public function calculateGameStats(string $userInput, string $expectedText, int $timeTaken): array
     {
         $userWords = str_word_count($userInput);
-        $expectedWords = str_word_count($expectedText);
 
         $correctChars = 0;
         $totalChars = strlen($expectedText);
