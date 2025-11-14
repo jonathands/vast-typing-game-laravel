@@ -1,0 +1,47 @@
+meta {
+  name: Calculate Stats
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base_url}}/api/game-play/calculate-stats
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{api_token}}
+}
+
+body:json {
+  {
+    "user_input": "The quick brown fox jumps over the lazy dog.",
+    "expected_text": "The quick brown fox jumps over the lazy dog.",
+    "time_taken": 120
+  }
+}
+
+docs {
+  Calculates typing statistics based on user input and expected text.
+
+  Requires authentication via Sanctum token.
+
+  Request Body:
+  - user_input (required): The text the user typed (string)
+  - expected_text (required): The expected text (string)
+  - time_taken (required): Time taken in seconds (integer, min: 1)
+
+  Response includes:
+  - wpm: Calculated words per minute
+  - accuracy: Calculated accuracy percentage (0-100)
+  - errors_count: Number of errors detected
+
+  Status Codes:
+  - 200: Stats calculated successfully
+  - 401: Unauthenticated
+  - 422: Validation error
+
+  Note: This endpoint can be used to calculate stats before submitting
+  the final result, or for testing purposes.
+}

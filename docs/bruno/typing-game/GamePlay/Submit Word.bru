@@ -1,0 +1,46 @@
+meta {
+  name: Submit Word
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/game-play/submit-word
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{api_token}}
+}
+
+body:json {
+  {
+    "word": "hello",
+    "expected_word": "hello"
+  }
+}
+
+docs {
+  Validates a typed word against the expected word during gameplay.
+
+  Requires authentication via Sanctum token.
+
+  Request Body:
+  - word (required): The word the user typed (string)
+  - expected_word (required): The expected word from the passage (string)
+
+  Response includes:
+  - word: The word that was typed
+  - expected: The expected word
+  - is_correct: Boolean indicating if the word matches exactly
+  - errors: Number of character errors in the word
+
+  Status Codes:
+  - 200: Word validated successfully
+  - 401: Unauthenticated
+  - 422: Validation error
+
+  Note: This endpoint is useful for real-time feedback during typing.
+  The final game submission should use the "Finish Game" endpoint.
+}

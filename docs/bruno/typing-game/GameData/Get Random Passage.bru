@@ -1,0 +1,33 @@
+meta {
+  name: Get Random Game
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/game-data/random
+  body: none
+  auth: none
+}
+
+docs {
+  Fetches a random game including passage and its ranking.
+
+  This endpoint is publicly accessible and does not require authentication.
+
+  Response includes:
+  - passage: Passage object with:
+    - id
+    - text
+    - language
+    - word_count
+    - character_count
+    - category
+    - created_at
+  - ranking: Array of top 10 players for this specific passage
+    - rank: Player's rank position
+    - user: User object (id, name)
+    - best_wpm: Player's best WPM for this passage
+    - best_accuracy: Player's best accuracy for this passage
+    - total_games: Total attempts on this passage
+}

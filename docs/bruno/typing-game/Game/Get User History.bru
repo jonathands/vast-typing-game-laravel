@@ -1,0 +1,41 @@
+meta {
+  name: Get User History
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/user/history?limit=20
+  body: none
+  auth: bearer
+}
+
+params:query {
+  limit: 20
+}
+
+auth:bearer {
+  token: {{api_token}}
+}
+
+docs {
+  Retrieves the authenticated user's game history.
+
+  Requires authentication via Sanctum token.
+
+  Query Parameters:
+  - limit (optional): Number of results to return (default: 20)
+
+  Results are ordered by most recent first (completed_at DESC).
+
+  Response includes array of results with:
+  - id
+  - user_id
+  - text_passage_id
+  - wpm
+  - accuracy
+  - time_taken
+  - errors_count
+  - completed_at
+  - text_passage (when loaded)
+}

@@ -1,0 +1,30 @@
+meta {
+  name: Logout
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/api/logout
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{api_token}}
+}
+
+docs {
+  Logout the authenticated user by revoking the current Sanctum token.
+
+  Requires authentication via Sanctum token.
+
+  No request body required.
+
+  Response:
+  - message: Success message
+
+  Status Codes:
+  - 200: Successfully logged out
+  - 401: Unauthenticated
+}

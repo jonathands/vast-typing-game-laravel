@@ -1,0 +1,46 @@
+meta {
+  name: Register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+  }
+}
+
+script:post-response {
+  if (res.status === 201) {
+    bru.setEnvVar("api_token", res.body.token);
+  }
+}
+
+docs {
+  Register a new user account.
+
+  Does not require authentication.
+
+  Request Body:
+  - name (required): User's full name (string, max: 255)
+  - email (required): User's email address (string, valid email, unique)
+  - password (required): Password (string, min: 8)
+  - password_confirmation (required): Password confirmation (must match password)
+
+  Response includes:
+  - user: User object (id, name, email)
+  - token: Sanctum authentication token
+
+  Status Codes:
+  - 201: Successfully registered
+  - 422: Validation error
+}

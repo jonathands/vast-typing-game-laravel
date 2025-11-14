@@ -1,0 +1,60 @@
+meta {
+  name: Finish Game
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/api/game-play/finish
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{api_token}}
+}
+
+body:json {
+  {
+    "text_passage_id": 1,
+    "user_input": "The quick brown fox jumps over the lazy dog.",
+    "wpm": 75.50,
+    "accuracy": 98.5,
+    "time_taken": 120,
+    "errors_count": 3
+  }
+}
+
+docs {
+  Finishes a game and saves the result for the authenticated user.
+
+  Requires authentication via Sanctum token.
+
+  Request Body:
+  - text_passage_id (required): ID of the passage that was typed (integer)
+  - user_input (required): The actual text the user typed (string)
+  - wpm (required): Words per minute (numeric, min: 0)
+  - accuracy (required): Accuracy percentage (numeric, 0-100)
+  - time_taken (required): Time taken in seconds (integer, min: 1)
+  - errors_count (required): Number of errors made (integer, min: 0)
+
+  Response includes:
+  - message: Success message
+  - result: Result object with:
+    - id
+    - user_id
+    - text_passage_id
+    - user_input
+    - wpm
+    - accuracy
+    - time_taken
+    - errors_count
+    - completed_at
+    - user: User object
+    - textPassage: Passage object
+
+  Status Codes:
+  - 201: Game finished and result saved successfully
+  - 401: Unauthenticated
+  - 422: Validation error
+}

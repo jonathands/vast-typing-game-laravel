@@ -1,0 +1,43 @@
+meta {
+  name: Login
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "john@example.com",
+    "password": "password123"
+  }
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setEnvVar("api_token", res.body.token);
+  }
+}
+
+docs {
+  Authenticate a user and receive a Sanctum token.
+
+  Does not require authentication.
+
+  Request Body:
+  - email (required): User's email address (string, valid email)
+  - password (required): User's password (string)
+
+  Response includes:
+  - user: User object (id, name, email)
+  - token: Sanctum authentication token (use this in the api_token environment variable)
+
+  Status Codes:
+  - 200: Successfully authenticated
+  - 422: Validation error
+  - 401: Invalid credentials
+}

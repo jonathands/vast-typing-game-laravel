@@ -1,0 +1,39 @@
+meta {
+  name: Get All Games
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/game-data?page=1&per_page=10
+  body: none
+  auth: none
+}
+
+params:query {
+  page: 1
+  per_page: 10
+}
+
+docs {
+  Fetches all game data including passages and global rankings.
+
+  This endpoint is publicly accessible and does not require authentication.
+
+  Query Parameters:
+  - page (optional): Page number (default: 1)
+  - per_page (optional): Results per page (default: 10)
+
+  Response includes:
+  - passages: Object with paginated passage data
+    - data: Array of passage objects
+    - pagination: Pagination metadata (current_page, last_page, per_page, total)
+  - ranking: Array of top 10 players globally
+    - rank: Player's rank position
+    - user: User object (id, name)
+    - best_wpm: Player's best WPM score
+    - best_accuracy: Player's best accuracy
+    - total_games: Total games played
+    - avg_wpm: Average WPM
+    - avg_accuracy: Average accuracy
+}

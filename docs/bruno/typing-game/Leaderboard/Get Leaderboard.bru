@@ -1,0 +1,36 @@
+meta {
+  name: Get Leaderboard
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/leaderboard?limit=10
+  body: none
+  auth: none
+}
+
+params:query {
+  limit: 10
+}
+
+docs {
+  Retrieves the global leaderboard.
+
+  This endpoint is publicly accessible and does not require authentication.
+
+  Query Parameters:
+  - limit (optional): Number of results to return (default: 10)
+
+  Results are ordered by best WPM (descending).
+  Shows the best performance per user (MAX WPM, MAX accuracy, COUNT of games).
+
+  Response includes array of users with:
+  - rank: Position on the leaderboard (1, 2, 3...)
+  - user:
+    - id
+    - name
+  - best_wpm: User's highest WPM
+  - best_accuracy: User's highest accuracy
+  - total_games: Total number of games played by the user
+}

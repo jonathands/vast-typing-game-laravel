@@ -1,0 +1,45 @@
+meta {
+  name: Start Game
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/game-play/start
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{api_token}}
+}
+
+body:json {
+  {
+    "text_passage_id": 1
+  }
+}
+
+docs {
+  Starts a new game session with a specific passage.
+
+  Requires authentication via Sanctum token.
+
+  Request Body:
+  - text_passage_id (required): ID of the passage to play (integer, must exist)
+
+  Response includes:
+  - game_id: Unique identifier for this game session
+  - passage: Passage data
+    - id: Passage ID
+    - text: The text to type
+    - word_count: Number of words
+    - character_count: Number of characters
+  - started_at: ISO 8601 timestamp when game started
+
+  Status Codes:
+  - 200: Game started successfully
+  - 401: Unauthenticated
+  - 422: Validation error
+  - 404: Passage not found
+}
